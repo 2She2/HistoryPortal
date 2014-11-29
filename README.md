@@ -17,4 +17,4 @@ ASP NET MVC 5 application powered by:
 
 
 
-Telerik UI for ASP.NET MVC Q3 2014 is included i the project. For license information, please refer to telerik.com
+Telerik UI for ASP.NET MVC Q3 2014 is included in the project. For license information, please refer to telerik.com.
