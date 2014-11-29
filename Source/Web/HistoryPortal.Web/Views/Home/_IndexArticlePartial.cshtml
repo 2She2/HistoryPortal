@@ -1,0 +1,24 @@
+﻿@using HistoryPortal.Web.ViewModels.Home
+@model IEnumerable<IndexArticleViewModel>
+
+<div class="row">
+    @foreach (var article in Model)
+    {
+        <div class="col-md-3">
+            <div class="well text-center">
+                <h4 class="row">@Html.ActionLink(@article.Title, "details", "articles", new { article.Id }, null)</h4>
+                <div class="row"><img src="#" alt="article image" /></div>
+                <div class="row">
+                    @if (article.Content.Length > 100)
+                    {
+                        @Html.Raw(article.Content.Substring(0, 100) + "...")
+                    }
+                    else
+                    {
+                        @Html.Raw(article.Content);
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

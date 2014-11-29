@@ -1,0 +1,9 @@
+﻿@using HistoryPortal.Web.Areas.User.Views.EventComments
+@model EventCommentsViewModel
+
+<div class="well">
+    <p>@Model.Content</p>
+    <hr />
+    <span>by: @Model.AuthorName</span>
+    <span class="pull-right">@Model.CreatedOn</span>
+</div>

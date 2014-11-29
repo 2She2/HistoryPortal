@@ -1,0 +1,70 @@
+﻿@using HistoryPortal.Web.Areas.User.InputModels.Comments
+@using HistoryPortal.Web.InputModels.Votes
+@using HistoryPortal.Web.Areas.User.ViewModels.Events
+@model EventsViewModel
+
+@if (Model == null)
+{
+    <h1 class="row danger">No event found!</h1>
+    return;
+}
+<h3 class="row">
+    @Model.Title
+</h3>
+
+<div class="row">
+    <div class="col-md-2">
+        <br />
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            var voteInput = new VoteInputModel() { Id = Model.Id };
+            @Html.Partial("_AddVotesPartial", voteInput)
+        }
+        else
+        {
+            <div class="glyphicon glyphicon-chevron-up btn btn-primary"></div>
+            <div class="glyphicon glyphicon-chevron-down btn btn-primary"></div>
+        }
+        <div id="VotesContainer">
+            @Html.Partial("_VotesPartial", Model)
+        </div>
+    </div>
+    <p class="col-md-10">
+        @Html.Raw(Model.Description)
+    </p>
+</div>
+<p class="pull-left"><strong>Author:</strong> @Model.Author</p>
+<p class="row pull-right"><strong>Event Date:</strong>@Model.Date</p>
+<br />
+<hr />
+@if (this.User.Identity.IsAuthenticated)
+{
+    var commentInput = new CommentInputModel() { EventId = Model.Id };
+    @Html.Partial("_AddCommentPartial", commentInput)
+}
+<br />
+<div id="allComments">
+    <h3>Comments</h3>
+    @if (!Model.Comments.Any())
+    {
+        <p class="well">No comments!</p>
+    }
+    else
+    {
+        foreach (var comment in Model.Comments)
+        {
+            @Html.Partial("_CommentPartial", comment)
+        }
+    }
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @Scripts.Render("~/bundles/jqueryval");
+
+    <script type="text/javascript">
+        function ClearInput() {
+            $('#commnetInputForm').val('');
+        }
+    </script>
+}

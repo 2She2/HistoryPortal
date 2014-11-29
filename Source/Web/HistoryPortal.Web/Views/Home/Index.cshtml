@@ -1,0 +1,20 @@
+﻿@using HistoryPortal.Web.ViewModels.Home
+@model IndexViewModel
+
+@section upcomingEvents {
+    <h3>
+        @Html.ActionLink("Upcoming events", "Upcoming", "Events", new { area = "User" }, new { @class = "btn btn-danger btn-lg btn-block" })
+    </h3>
+}
+
+<h2>
+    Newest articles
+</h2>
+@Html.Action("NewestArticles", "Home")
+@*@Html.Partial("_IndexArticlePartial", Model.NewestArticles)*@
+
+<h2>
+    Popular articles
+</h2>
+@Html.Action("MostCommentedTickets", "Home")
+@*@Html.Partial("_IndexArticlePartial", Model.PopularArticles)*@

@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+    @Styles.Render("~/Content/custom")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("History Portal", "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Articles<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("All", "All", "Articles", new { area = string.Empty }, null)</li>
+                            @if (this.User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("Create article", "create", "Articles", new { area = string.Empty }, null)</li>
+                            }
+                        </ul>
+                    </li>
+
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Events<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Upcoming", "Upcoming", "Events", new { area = "User" }, null)</li>
+                                <li>@Html.ActionLink("Past", "Past", "Events", new { area = "User" }, null)</li>
+                                <li>@Html.ActionLink("Create", "Create", "Events", new { area = "User" }, null)</li>
+                            </ul>
+                        </li>
+                       
+                    }
+
+                    @if (this.User.IsInRole("admin"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Admin<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Articles", "Index", "ArticlesAdmin", new { area = "Administration" }, null)</li>
+                                <li>@Html.ActionLink("Categories", "Index", "CategoriesAdmin", new { area = "Administration" }, null)</li>
+                                <li>@Html.ActionLink("Comments", "Index", "CommentsAdmin", new { area = "Administration" }, null)</li>
+                                <li>@Html.ActionLink("Events", "Index", "EventsAdmin", new { area = "Administration" }, null)</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+
+
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="text-center">
+            @RenderSection("upcomingEvents", required: false)
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - History Portal</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

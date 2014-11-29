@@ -1,0 +1,19 @@
+﻿@using HistoryPortal.Web.Areas.User.ViewModels.Events
+@model EventsViewModel
+
+<div class="well">
+    <h4>@Html.ActionLink(@Model.Title, "details", "events", new { Model.Id }, null)</h4>
+    <p style="word-wrap: break-word">
+        @if (Model.Description.Length > 500)
+        {
+            @Html.Raw(Model.Description.Substring(0, 500) + "...")
+        }
+        else
+        {
+            @Html.Raw(Model.Description);
+        }
+    </p>
+    <p class="pull-left"><strong>Author:</strong> @Model.Author</p>
+    <p class="pull-right"><strong>Event Date:</strong> @Model.Date</p>
+    <br />
+</div>

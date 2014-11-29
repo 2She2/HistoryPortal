@@ -1,0 +1,29 @@
+﻿@using HistoryPortal.Web.InputModels.Comments
+@model CommentInputModel
+
+@using (Ajax.BeginForm("PostComment", "Comments", new { area = string.Empty }, new AjaxOptions
+    {
+        UpdateTargetId = "allComments",
+        InsertionMode = InsertionMode.InsertAfter,
+        HttpMethod = "POST",
+        OnSuccess = "ClearInput"
+    }, null))
+{
+    @Html.Hidden("ArticleId", Model.ArticleId)
+    @Html.AntiForgeryToken()
+    @Html.ValidationMessageFor(m => Model.Content, null, new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, "Comment", new { @class = "col-md-1 control-label" })
+        <div class="col-md-9">
+            @Html.TextAreaFor(model => model.Content, new { placeholder = "Comment", @class = "form-control", id = "commnetInputForm" })
+        </div>
+        <input type="submit" value="Post comment" class="col-md-2 btn btn-primary btn-lg" />
+    </div>
+}
+<div class="row"></div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

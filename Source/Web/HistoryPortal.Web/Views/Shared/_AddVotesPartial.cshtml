@@ -1,0 +1,14 @@
+﻿@using HistoryPortal.Web.InputModels.Votes
+
+@Ajax.ActionLink(" ", "Up", "Votes", new { Id = Model.Id },
+    new AjaxOptions() { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "VotesContainer" },
+    new { @class = "glyphicon glyphicon-chevron-up btn btn-primary" })
+
+@Ajax.ActionLink(" ", "Down", "Votes", new { Id = Model.Id },
+    new AjaxOptions() { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "VotesContainer" },
+    new { @class = "glyphicon glyphicon-chevron-down btn btn-primary" })
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,48 @@
+﻿@using HistoryPortal.Web.Areas.Administration.ViewModels.CommentsAdmin
+
+@{
+    ViewBag.Title = "Comments Administration";
+    const string ControllerName = "CommentsAdmin";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo()
+    .Grid<CommentsAdminViewModel>()
+    .Name("Grid")
+    .Columns(cols =>
+    {
+        cols.Bound(pr => pr.Id);
+        cols.Bound(pr => pr.Content);
+        cols.Bound(pr => pr.ArticleTitle);
+        cols.Bound(pr => pr.AuthorName);
+        cols.Bound(pr => pr.CreatedOn)
+            .ClientTemplate("#=kendo.toString(CreatedOn, 'dd/MM/yyyy HH:mm:ss')#");
+        cols.Bound(pr => pr.ModifiedOn)
+            .ClientTemplate("#=kendo.toString(CreatedOn, 'dd/MM/yyyy HH:mm:ss')#");
+        cols.Command(com => com.Edit()).Title("Edit");
+        cols.Command(com => com.Destroy()).Title("Delete");
+    })
+    .ColumnMenu()
+    .Selectable()
+    .Pageable(page => page.Refresh(true))
+    .Sortable()
+    .Groupable()
+    .Filterable()
+    .Editable(edit => edit.Mode(GridEditMode.PopUp))
+    .ToolBar(toolbar => toolbar.Create())
+    .DataSource(data => data
+        .Ajax()
+        .Model(m =>
+        {
+            m.Id(u => u.Id);
+            m.Field(u => u.Id).Editable(false);
+            m.Field(u => u.CreatedOn).Editable(false);
+            m.Field(u => u.ModifiedOn).Editable(false);
+        })
+    .PageSize(5)
+    .Read(read => read.Action("Read", ControllerName))
+    .Create(create => create.Action("Create", ControllerName))
+    .Update(update => update.Action("Update", ControllerName))
+    .Destroy(destroy => destroy.Action("Destroy", ControllerName))
+    ))

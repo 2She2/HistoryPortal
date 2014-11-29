@@ -1,0 +1,57 @@
+﻿@using HistoryPortal.Web.ViewModels.Articles
+@model IEnumerable<ArticlesViewModel>
+
+@section upcomingEvents {
+    <h3>
+        @Html.ActionLink("Upcoming events", "Upcoming", "Events", new { area = "User" }, new { @class = "btn btn-danger btn-lg btn-block" })
+    </h3>
+}
+
+<div class="row">
+    <h2 class="col-md-10">All articles</h2>
+</div>
+@if (Model == null || Model.Count() <= 0)
+{
+    <p>No Articles Founed</p>
+}
+else
+{
+    foreach (var article in Model)
+    {
+        @Html.Partial("_AllArticlesPartial", article)
+    }
+}
+
+<ul class="pagination">
+    @{
+
+        var prevPage = ViewBag.CurrPage - 1;
+
+        if (ViewBag.CurrPage > 1)
+        {
+            <li><a href="@Url.Action("All", new { id = prevPage })"><<</a></li>
+        }
+
+    }
+    @for (int i = 1; i <= ViewBag.Pages; i++)
+    {
+
+        if (i == ViewBag.CurrPage)
+        {
+            <li class="active"><a href="@Url.Action("All", new { id = i })">@i</a></li>
+        }
+        else
+        {
+            <li><a href="@Url.Action("All", new { id = i })">@i</a></li>
+        }
+
+    }
+    @{
+        var nextPage = ViewBag.CurrPage + 1;
+
+        if (ViewBag.CurrPage < ViewBag.Pages)
+        {
+            <li><a href="@Url.Action("All", new { id = nextPage })">>></a></li>
+        }
+    }
+</ul>

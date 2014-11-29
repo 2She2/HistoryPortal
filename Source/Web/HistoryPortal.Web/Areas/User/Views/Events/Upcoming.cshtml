@@ -1,0 +1,56 @@
+﻿@using HistoryPortal.Web.Areas.User.ViewModels.Events
+@model IEnumerable<EventsViewModel>
+
+@Html.ValidationSummary("", new { @class = "text-danger" })
+
+@{
+    ViewBag.Title = "Upcoming events";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (Model == null || Model.Count() <= 0)
+{
+    <p>No Events Founed</p>
+}
+else
+{
+    foreach (var curEvent in Model)
+    {
+        @Html.Partial("_EventPartial", curEvent)
+    }
+}
+
+<ul class="pagination">
+    @{
+
+        var prevPage = ViewBag.CurrPage - 1;
+
+        if (ViewBag.CurrPage > 1)
+        {
+            <li><a href="@Url.Action("Upcoming", new { id = prevPage })"><<</a></li>
+        }
+
+    }
+    @for (int i = 1; i <= ViewBag.Pages; i++)
+    {
+
+        if (i == ViewBag.CurrPage)
+        {
+            <li class="active"><a href="@Url.Action("Upcoming", new { id = i })">@i</a></li>
+        }
+        else
+        {
+            <li><a href="@Url.Action("Upcoming", new { id = i })">@i</a></li>
+        }
+
+    }
+    @{
+        var nextPage = ViewBag.CurrPage + 1;
+
+        if (ViewBag.CurrPage < ViewBag.Pages)
+        {
+            <li><a href="@Url.Action("Upcoming", new { id = nextPage })">>></a></li>
+        }
+    }
+</ul>
